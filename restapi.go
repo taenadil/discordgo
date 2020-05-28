@@ -1317,6 +1317,19 @@ func (s *Session) GuildAuditLog(guildID, userID, beforeID string, actionType, li
 
 // GuildEmojiCreate creates a new emoji
 // guildID : The ID of a Guild.
+func (s *Session) GuildEmojiList(guildID string) (emoji []*Emoji, err error) {
+
+	body, err := s.RequestWithBucketID("GET", EndpointGuildEmojis(guildID), nil, EndpointGuildEmojis(guildID))
+	if err != nil {
+		return
+	}
+
+	err = unmarshal(body, &emoji)
+	return
+}
+
+// GuildEmojiCreate creates a new emoji
+// guildID : The ID of a Guild.
 // name    : The Name of the Emoji.
 // image   : The base64 encoded emoji image, has to be smaller than 256KB.
 // roles   : The roles for which this emoji will be whitelisted, can be nil.
