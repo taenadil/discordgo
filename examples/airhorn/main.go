@@ -53,6 +53,10 @@ func main() {
 	// Register guildCreate as a callback for the guildCreate events.
 	dg.AddHandler(guildCreate)
 
+	// We need information about guilds (which includes their channels),
+	// messages and voice states.
+	dg.Identify.Intents = discordgo.IntentsGuilds | discordgo.IntentsGuildMessages | discordgo.IntentsGuildVoiceStates
+
 	// Open the websocket and begin listening.
 	err = dg.Open()
 	if err != nil {
@@ -74,7 +78,7 @@ func main() {
 func ready(s *discordgo.Session, event *discordgo.Ready) {
 
 	// Set the playing status.
-	s.UpdateStatus(0, "!airhorn")
+	s.UpdateGameStatus(0, "!airhorn")
 }
 
 // This function will be called (due to AddHandler above) every time a new
